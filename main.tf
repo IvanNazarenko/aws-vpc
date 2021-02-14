@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "internet_gw" {
 resource "aws_subnet" "public_subnet_a" {
   cidr_block = "10.0.11.0/24"
   vpc_id = aws_vpc.main_vpc.id
-  availability_zone = "us-east-2a"
+  availability_zone = "us-east-1a"
   ## set every host in subnet public IP
   map_public_ip_on_launch = true
   tags = {
@@ -30,7 +30,7 @@ resource "aws_subnet" "public_subnet_a" {
 resource "aws_subnet" "public_subnet_b" {
   cidr_block = "10.0.21.0/24"
   vpc_id = aws_vpc.main_vpc.id
-  availability_zone = "us-east-2b"
+  availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
   tags = {
     Name = var.public_subnet_b_name
