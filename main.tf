@@ -47,13 +47,13 @@ resource "aws_route_table" "route_table_for_public_subnet" {
 
 resource "aws_route_table_association" "attach_RT_public_b" {
   subnet_id = aws_subnet.public_subnet_a.id
-  route_table_id = aws_route_table.route_table_for_public_subnet
+  route_table_id = aws_route_table.route_table_for_public_subnet.id
 }
 
 
 resource "aws_route_table_association" "attach_RT_public_a" {
   subnet_id = aws_subnet.public_subnet_b.id
-  route_table_id = aws_route_table.route_table_for_public_subnet
+  route_table_id = aws_route_table.route_table_for_public_subnet.id
 }
 
 
