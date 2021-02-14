@@ -88,6 +88,7 @@ resource "aws_nat_gateway" "nat_gw_a" {
   tags = {
     Name = var.nat_gw_a_name
   }
+  depends_on = [aws_eip.eip_gw_a]
 }
 
 resource "aws_nat_gateway" "nat_gw_b" {
@@ -96,6 +97,7 @@ resource "aws_nat_gateway" "nat_gw_b" {
   tags = {
     Name = var.nat_gw_b_name
   }
+  depends_on = [aws_eip.eip_gw_b]
 }
 
 #resource "aws_route_table" "route_table_for_private_subnet" {
