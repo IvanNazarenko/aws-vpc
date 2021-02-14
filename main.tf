@@ -56,9 +56,43 @@ resource "aws_route_table_association" "attach_RT_public_a" {
   route_table_id = aws_route_table.route_table_for_public_subnet.id
 }
 
+resource "aws_subnet" "private_subnet_a" {
+  cidr_block = "10.0.12.0/24"
+  vpc_id = aws_vpc.main_vpc.id
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = var.private_subnet_a_name
+  }
+}
 
+resource "aws_subnet" "private_subnet_b" {
+  cidr_block = "10.0.22.0/24"
+  vpc_id = aws_vpc.main_vpc.id
+  availability_zone = "us-east-1a"
+  tags = {
+    Name = var.private_subnet_b_name
+  }
+}
 
-#resource "aws_nat_gateway" "nat_gw" {
-#  allocation_id = ""
-#  subnet_id = ""
+resource "aws_nat_gateway" "nat_gw_a" {
+  subnet_id = aws_subnet.public_subnet_a
+  tags = {
+    Name = var.nat_gw_a_name
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw_b" {
+  subnet_id = aws_subnet.public_subnet_b
+  tags = {
+    Name = var.nat_gw_b_name
+  }
+}
+
+#resource "aws_route_table" "route_table_for_private_subnet" {
+#  vpc_id = aws_vpc.main_vpc.id
+#  route {
+#    cidr_block = "0.0.0.0/0"
+#    gateway_id = aws_internet_gateway.internet_gw.id
+#  }
 #}
+
