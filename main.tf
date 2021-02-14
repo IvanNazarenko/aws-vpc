@@ -74,7 +74,16 @@ resource "aws_subnet" "private_subnet_b" {
   }
 }
 
+resource "aws_eip" "eip_gw_a" {
+  vpc = true
+}
+
+resource "aws_eip" "eip_gw_b" {
+  vpc = true
+}
+
 resource "aws_nat_gateway" "nat_gw_a" {
+  allocation_id = aws_eip.eip_gw_a
   subnet_id = aws_subnet.public_subnet_a
   tags = {
     Name = var.nat_gw_a_name
@@ -82,6 +91,7 @@ resource "aws_nat_gateway" "nat_gw_a" {
 }
 
 resource "aws_nat_gateway" "nat_gw_b" {
+  allocation_id = aws_eip.eip_gw_b
   subnet_id = aws_subnet.public_subnet_b
   tags = {
     Name = var.nat_gw_b_name
