@@ -39,8 +39,21 @@ resource "aws_subnet" "public_subnet_b" {
 
 resource "aws_route_table" "route_table_for_public_subnet" {
   vpc_id = aws_vpc.main_vpc.id
-  gateway_id = aws_internet_gateway.internet_gw
-  subnet_id = ["aws_subnet.public_subnet_a", "aws_subnet.public_subnet_b"]
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.internet_gw
+  }
+}
+
+resource "aws_route_table_association" "attach_route_table_to_public_subnet" {
+  subnet_id = aws_subnet.public_subnet_a
+  route_table_id = aws_route_table.route_table_for_public_subnet
+}
+
+
+resource "aws_route_table_association" "attach_route_table_to_public_subnet" {
+  subnet_id = aws_subnet.public_subnet_b
+  route_table_id = aws_route_table.route_table_for_public_subnet
 }
 
 
