@@ -37,3 +37,13 @@ variable "private_subnet_b_name" {
   type = string
   description = "mane of private subnet b"
 }
+
+variable "db_subnet_a_name" {
+  type = string
+  description = "name of db subnet a"
+}
+
+variable "db_subnet_b_name" {
+  type = string
+  description = "name of db subnet b"
+}
