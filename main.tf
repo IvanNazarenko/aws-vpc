@@ -178,8 +178,8 @@ resource "aws_launch_template" "basion" {
   name_prefix = "bastion"
   image_id = "ami-03d315ad33b9d49c4"
   instance_type = "t2.micro"
-  key_name = aws_key_pair.wayne
-  security_group_names = aws_security_group.bastion
+  key_name = aws_key_pair.wayne.id
+  security_group_names = aws_security_group.bastion.id
   block_device_mappings {
     ebs {
       volume_size = 20
