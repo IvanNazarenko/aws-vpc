@@ -117,11 +117,15 @@ resource "aws_route_table" "route_table_for_private_subnet_b" {
 }
 
 resource "aws_route_table_association" "attach_RT_private_a" {
+  subnet_id = aws_subnet.private_subnet_a.id
   route_table_id = aws_route_table.route_table_for_private_subnet_a.id
+  gateway_id = aws_nat_gateway.nat_gw_a.id
 }
 
 resource "aws_route_table_association" "attach_RT_private_b" {
+  subnet_id = aws_subnet.private_subnet_b.id
   route_table_id = aws_route_table.route_table_for_private_subnet_b.id
+  gateway_id = aws_nat_gateway.nat_gw_b.id
 }
 
 resource "aws_subnet" "db_subnet_a" {
@@ -189,7 +193,7 @@ resource "aws_launch_template" "basion" {
 
 resource "aws_autoscaling_group" "bastion" {
   launch_configuration = aws_launch_template.basion
-  vpc_zone_identifier = [aws_subnet.public_subnet_a,aws_subnet.public_subnet_b]
+  vpc_zone_identifier = [aws_subnet.public_subnet_a.id,aws_subnet.public_subnet_b.id]
   desired_capacity = 1
   min_size = 1
   max_size = 1
