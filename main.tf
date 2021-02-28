@@ -84,7 +84,6 @@ resource "aws_eip" "eip_gw_b" {
 
 resource "aws_nat_gateway" "nat_gw_a" {
   allocation_id = aws_eip.eip_gw_a.id
-  availability_zone = "us-east-1a"
   subnet_id = aws_subnet.public_subnet_a.id
   tags = {
     Name = var.nat_gw_a_name
@@ -94,7 +93,6 @@ resource "aws_nat_gateway" "nat_gw_a" {
 
 resource "aws_nat_gateway" "nat_gw_b" {
   allocation_id = aws_eip.eip_gw_b.id
-  availability_zone = "us-east-1b"
   subnet_id = aws_subnet.public_subnet_b.id
   tags = {
     Name = var.nat_gw_b_name
@@ -195,7 +193,7 @@ resource "aws_launch_template" "basion" {
 
 resource "aws_autoscaling_group" "bastion" {
   launch_configuration = aws_launch_template.basion
-  availability_zones = ["us-east-1a","us-east-1b"]
+  availability_zones = [aws_subnet.public_subnet_a.availability_zone_id, aws_subnet.public_subnet_b.availability_zone_id]
   vpc_zone_identifier = [aws_subnet.public_subnet_a.id,aws_subnet.public_subnet_b.id]
   desired_capacity = 1
   min_size = 1
