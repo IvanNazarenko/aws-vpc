@@ -104,7 +104,7 @@ resource "aws_route_table" "route_table_for_private_subnet_a" {
   vpc_id = aws_vpc.main_vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat_gw_a
+    gateway_id = aws_nat_gateway.nat_gw_a.id
   }
 }
 
@@ -112,7 +112,7 @@ resource "aws_route_table" "route_table_for_private_subnet_b" {
   vpc_id = aws_vpc.main_vpc.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat_gw_b
+    gateway_id = aws_nat_gateway.nat_gw_b.id
   }
 }
 
@@ -182,7 +182,7 @@ resource "aws_launch_template" "basion" {
     }
   }
   tags = {
-    Name = Maintainer
+    Name = "Maintainer"
   }
 }
 
