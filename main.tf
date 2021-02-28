@@ -159,10 +159,12 @@ resource "aws_route_table" "route_table_for_db_subnet_b" {
 
 resource "aws_route_table_association" "attach_RT_db_a" {
   route_table_id = aws_route_table.route_table_for_db_subnet_a.id
+  subnet_id = aws_subnet.db_subnet_a.id
 }
 
 resource "aws_route_table_association" "attach_RT_db_b" {
   route_table_id = aws_route_table.route_table_for_db_subnet_b.id
+  subnet_id = aws_subnet.db_subnet_b.id
 }
                      # NEED CREATE ROUTE TABLE
 
