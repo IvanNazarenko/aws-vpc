@@ -119,13 +119,11 @@ resource "aws_route_table" "route_table_for_private_subnet_b" {
 resource "aws_route_table_association" "attach_RT_private_a" {
   subnet_id = aws_subnet.private_subnet_a.id
   route_table_id = aws_route_table.route_table_for_private_subnet_a.id
-  gateway_id = aws_nat_gateway.nat_gw_a.id
 }
 
 resource "aws_route_table_association" "attach_RT_private_b" {
   subnet_id = aws_subnet.private_subnet_b.id
   route_table_id = aws_route_table.route_table_for_private_subnet_b.id
-  gateway_id = aws_nat_gateway.nat_gw_b.id
 }
 
 resource "aws_subnet" "db_subnet_a" {
@@ -136,14 +134,36 @@ resource "aws_subnet" "db_subnet_a" {
   }
 }
 
+
 resource "aws_subnet" "db_subnet_b" {
-  cidr_block = "10.0.13.0/24"
+  cidr_block = "10.0.23.0/24"
   vpc_id = aws_vpc.main_vpc.id
   tags = {
     Name = var.db_subnet_b_name
   }
 }
 
+resource "aws_route_table" "route_table_for_db_subnet_a" {
+  vpc_id = aws_vpc.main_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+  }
+}
+
+resource "aws_route_table" "route_table_for_db_subnet_b" {
+  vpc_id = aws_vpc.main_vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+  }
+}
+
+resource "aws_route_table_association" "attach_RT_db_a" {
+  route_table_id = aws_route_table.route_table_for_db_subnet_a.id
+}
+
+resource "aws_route_table_association" "attach_RT_db_b" {
+  route_table_id = aws_route_table.route_table_for_db_subnet_b.id
+}
                      # NEED CREATE ROUTE TABLE
 
 
