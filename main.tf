@@ -192,7 +192,7 @@ resource "aws_launch_template" "basion" {
 
 
 resource "aws_autoscaling_group" "bastion" {
-  launch_configuration = aws_launch_template.basion
+  launch_configuration = aws_launch_template.basion.id
   availability_zones = [aws_subnet.public_subnet_a.availability_zone_id, aws_subnet.public_subnet_b.availability_zone_id]
   vpc_zone_identifier = [aws_subnet.public_subnet_a.id,aws_subnet.public_subnet_b.id]
   desired_capacity = 1
