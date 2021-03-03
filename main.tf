@@ -218,6 +218,7 @@ resource "aws_launch_configuration" "bastion" {
 resource "aws_autoscaling_group" "bastion" {
   name = "Ansible-host"
   launch_configuration = aws_launch_configuration.bastion.id
+  vpc_zone_identifier = aws_vpc.main_vpc.id
   availability_zones = ["us-east-1a","us-east-1b"]
   desired_capacity = 1
   min_size = 1
