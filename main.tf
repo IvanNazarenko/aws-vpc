@@ -207,12 +207,13 @@ resource "aws_launch_configuration" "bastion" {
   instance_type = "t2.micro"
   name = "bastion-host"
   key_name = aws_key_pair.wayne.key_name
-  security_group_names = [aws_security_group.bastion.name]
+  security_group = [aws_security_group.bastion.name]
   ebs_block_device {
     device_name = "HDD-bastion"
     volume_size = 20
   }
 }
+
 
 resource "aws_autoscaling_group" "bastion" {
   name = "Ansible-host"
