@@ -166,7 +166,7 @@ provider "aws" {
 ##            Create ASG             ##
 ########################################
 
-resource"aws_key_pair" "wayne" {
+resource "aws_key_pair" "wayne" {
   key_name = "wayne-key"
   public_key = file("id_rsa.pub")
 }
