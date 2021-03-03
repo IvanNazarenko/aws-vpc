@@ -167,10 +167,10 @@ resource "aws_route_table_association" "attach_RT_db_b" {
 ##            Create ASG             ##
 ########################################
 
-resource"aws_key_pair" "wayne" {
-  key_name = "wayne-key"
-  public_key = file("id_rsa.pub")
-}
+#resource"aws_key_pair" "wayne" {
+#  key_name = "wayne-key"
+#  public_key = file("id_rsa.pub")
+#}
 
 resource "aws_security_group" "bastion" {
   name = "bastion"
@@ -194,7 +194,7 @@ resource "aws_launch_template" "basion" {
   name_prefix = "bastion"
   image_id = "ami-03d315ad33b9d49c4"
   instance_type = "t2.micro"
-  key_name = aws_key_pair.wayne.id
+  #key_name = aws_key_pair.wayne.id
   security_group_names = [aws_security_group.bastion.name]
   block_device_mappings {
     ebs {
