@@ -145,16 +145,10 @@ resource "aws_subnet" "db_subnet_b" {
 
 resource "aws_route_table" "route_table_for_db_subnet_a" {
   vpc_id = aws_vpc.main_vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-  }
 }
 
 resource "aws_route_table" "route_table_for_db_subnet_b" {
   vpc_id = aws_vpc.main_vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-  }
 }
 
 resource "aws_route_table_association" "attach_RT_db_a" {
