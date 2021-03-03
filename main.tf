@@ -209,6 +209,7 @@ resource "aws_launch_configuration" "bastion" {
   key_name = aws_key_pair.wayne.key_name
   security_groups = [aws_security_group.bastion.id]
   vpc_classic_link_id = aws_vpc.main_vpc.id
+  vpc_classic_link_security_groups = aws_security_group.bastion.id
   ebs_block_device {
     device_name = "HDD-bastion"
     volume_size = 20
