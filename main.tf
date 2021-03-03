@@ -208,6 +208,7 @@ resource "aws_launch_configuration" "bastion" {
   name = "bastion-host"
   key_name = aws_key_pair.wayne.key_name
   security_groups = [aws_security_group.bastion.id]
+  vpc_classic_link_id = aws_vpc.main_vpc.id
   ebs_block_device {
     device_name = "HDD-bastion"
     volume_size = 20
@@ -218,7 +219,6 @@ resource "aws_launch_configuration" "bastion" {
 resource "aws_autoscaling_group" "bastion" {
   name = "Ansible-host"
   launch_configuration = aws_launch_configuration.bastion.id
-  vpc_zone_identifier = aws_vpc.main_vpc.id
   availability_zones = ["us-east-1a","us-east-1b"]
   desired_capacity = 1
   min_size = 1
