@@ -190,9 +190,9 @@ resource "aws_security_group" "bastion" {
 }
 
 resource "aws_launch_template" "basion" {
-  name_prefix = "bastion"
   image_id = "ami-03d315ad33b9d49c4"
   instance_type = "t2.micro"
+  name = "ubuntu-minimal"
   key_name = aws_key_pair.wayne.key_name
   security_group_names = [aws_security_group.bastion.name]
   block_device_mappings {
@@ -200,15 +200,12 @@ resource "aws_launch_template" "basion" {
       volume_size = 20
     }
   }
-  tags = {
-    Name = "Maintainer"
-  }
 }
 
 
 resource "aws_autoscaling_group" "bastion" {
   name = "Ansible-host"
-  launch_configuration = aws_launch_template.basion.id
+  launch_configuration = aws_launch_template.basion.name
   availability_zones = ["us-east-1a","us-east-1b"]
   desired_capacity = 1
   min_size = 1
