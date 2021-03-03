@@ -207,7 +207,7 @@ resource "aws_launch_configuration" "bastion" {
   instance_type = "t2.micro"
   name = "bastion-host"
   key_name = aws_key_pair.wayne.key_name
-  security_groups = aws_security_group.bastion.name
+  security_groups = aws_security_group.bastion
   ebs_block_device {
     device_name = "HDD-bastion"
     volume_size = 20
