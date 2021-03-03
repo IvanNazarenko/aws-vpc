@@ -189,26 +189,37 @@ resource "aws_security_group" "bastion" {
 
 }
 
-resource "aws_launch_template" "basion" {
+#resource "aws_launch_template" "basion" {
+#  image_id = "ami-03d315ad33b9d49c4"
+#  instance_type = "t2.micro"
+#  name = "ubuntu-minimal"
+#  key_name = aws_key_pair.wayne.key_name
+#  security_group_names = [aws_security_group.bastion.name]
+#  block_device_mappings {
+#    ebs {
+#      volume_size = 20
+#    }
+#  }
+#}
+
+resource "aws_launch_configuration" "bastion" {
   image_id = "ami-03d315ad33b9d49c4"
   instance_type = "t2.micro"
-  name = "ubuntu-minimal"
+  name = "bastion-host"
   key_name = aws_key_pair.wayne.key_name
   security_group_names = [aws_security_group.bastion.name]
-  block_device_mappings {
-    ebs {
-      volume_size = 20
-    }
+  ebs_block_device {
+    device_name = "HDD-bastion"
+    volume_size = 20
   }
 }
 
-
 resource "aws_autoscaling_group" "bastion" {
   name = "Ansible-host"
-  launch_configuration = aws_launch_template.basion.name
+  launch_configuration = aws_launch_configuration.bastion
   availability_zones = ["us-east-1a","us-east-1b"]
   desired_capacity = 1
   min_size = 1
   max_size = 1
-  depends_on = [aws_launch_template.basion]
+  depends_on = [aws_launch_configuration.bastion]
 }
